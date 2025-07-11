@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery - Moonlit Vows...💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1a1a1a, #3a3a3a);
+      color: white;
+    }
+
+    .header {
+      padding: 20px;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 60px;
+    }
+
+    .restaurant-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #f0a500;
+      margin-left: 10px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #f0a500;
+      margin-bottom: 40px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      background-color: #222;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .caption {
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #f0a500;
+      color: #111;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 30px;
+      color: #f0a500;
+      cursor: pointer;
+    }
+
+    /* Removed custom nav styles to use styles.css */
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="https://img.icons8.com/color/96/restaurant.png" alt="Logo"/></a>
+        <span class="restaurant-name">Moonlit Vows...💜</span>
+      </div>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="Online Order.html">Online Order</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="cta"></div>
+    </div>
+  </header>
+
+  <section class="gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="menu-grid">
+
+        <div class="gallery-card" onclick="openLightbox(this)">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="Interior Ambiance">
+          <div class="caption">Cozy Candlelit Ambiance</div>
+        </div>
+
+        <div class="gallery-card" onclick="openLightbox(this)">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="Dining Setup">
+          <div class="caption">Elegant Dining Space</div>
+        </div>
+
+        <div class="gallery-card" onclick="openLightbox(this)">
+          <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2" alt="Dish Presentation">
+          <div class="caption">Artistic Dish Presentation</div>
+        </div>
+
+        <div class="gallery-card" onclick="openLightbox(this)">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" alt="Chef at Work">
+          <div class="caption">Master Chefs at Work</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="Full Image" />
+  </div>
+
+  <script>
+    function openLightbox(card) {
+      const img = card.querySelector('img');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

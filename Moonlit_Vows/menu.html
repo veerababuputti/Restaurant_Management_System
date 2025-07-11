@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Menu - Moonlit Vows...💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1a1a1a, #2c2c2c);
+      color: white;
+      display: flex;
+    }
+    .main-content { flex: 3; }
+    .cart {
+      flex: 1;
+      background-color: #111;
+      padding: 20px;
+      border-left: 2px solid #444;
+      height: 100vh;
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+    }
+    .cart h3 { color: #f0a500; text-align: center; }
+    .cart ul { list-style: none; padding: 0; }
+    .cart li {
+      background: #222;
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .remove-btn {
+      background: red; border: none; color: white;
+      padding: 2px 6px; cursor: pointer; border-radius: 4px; font-size: 0.8rem;
+    }
+    .total {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .qr-container canvas {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .header, h2 { text-align: center; background-color: #000; }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo img { height: 60px; }
+    .restaurant-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #f0a500;
+      margin-left: 10px;
+    }
+    .menu-category-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 30px auto;
+    }
+    .menu-category-buttons button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #f0a500;
+      color: #000;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .menu-item {
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 260px;
+      text-align: center;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .menu-item h3, .price {
+      background-color: rgba(0,0,0,0.6);
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .order-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .order-btn:hover { background-color: #218838; }
+    .nav {
+      display: flex;
+      justify-content: center;
+      background-color: #000;
+      padding: 10px 0;
+    }
+    .nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #f0a500;
+      font-weight: bold;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="https://img.icons8.com/color/96/restaurant.png" alt="Logo"/></a>
+        <span class="restaurant-name">Moonlit Vows...💜</span>
+      </div>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="Online Order.html">Online Order</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="cta"></div>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <section class="menu">
+      <h2>Our Menu</h2>
+      <div class="menu-category-buttons">
+        <button onclick="filterMenu('veg')">Veg</button>
+        <button onclick="filterMenu('nonveg')">Non Veg</button>
+        <button onclick="filterMenu('juices')">Juices</button>
+        <button onclick="filterMenu('cooldrinks')">Cool Drinks</button>
+        <button onclick="filterMenu('bakery')">Bakery Items</button>
+      </div>
+      <div class="menu-grid" id="menuItems"></div>
+      <div style="text-align: center; margin: 20px auto;">
+        <button onclick="submitOrder()" class="cta-button" style="padding: 10px 30px; font-weight: bold; background-color: #f0a500; border: none; border-radius: 5px; cursor: pointer;">Make an Order</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="cart">
+    <h3>Your Cart</h3>
+    <ul id="cartList"></ul>
+    <div class="total">Total: ₹<span id="totalAmount">0</span></div>
+    <div class="qr-container"><canvas id="qr"></canvas></div>
+  </div>
+
+  <script>
+    const cartList = document.getElementById('cartList');
+    const totalAmount = document.getElementById('totalAmount');
+    const qrCanvas = document.getElementById('qr');
+    const qr = new QRious({ element: qrCanvas, size: 150 });
+    const orderList = JSON.parse(localStorage.getItem('moonlitCart')) || [];
+
+    function updateCart() {
+      cartList.innerHTML = '';
+      let total = 0;
+      orderList.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} - ${item.price} <button class="remove-btn" onclick="removeFromCart(${index})">x</button>`;
+        cartList.appendChild(li);
+        total += parseInt(item.price.replace(/\D/g, ''));
+      });
+      totalAmount.textContent = total;
+      qr.value = orderList.map(i => `${i.name} - ${i.price}`).join('\n') + `\nTotal: ₹${total}`;
+      localStorage.setItem('moonlitCart', JSON.stringify(orderList));
+    }
+
+    function addToOrder(itemName, btn) {
+      const item = Object.values(menuData).flat().find(i => i.name === itemName);
+      if (item && !orderList.some(i => i.name === item.name)) {
+        orderList.push(item);
+        btn.innerText = "✓ Added";
+        btn.style.backgroundColor = "#ffc107";
+        updateCart();
+      }
+    }
+
+    function removeFromCart(index) {
+      orderList.splice(index, 1);
+      updateCart();
+    }
+
+    function submitOrder() {
+      if (!orderList.length) {
+        alert("Please select items before placing an order.");
+        return;
+      }
+
+      const orderSummary = orderList.map(item => `${item.name} - ${item.price}`).join('\n');
+      const total = orderList.reduce((sum, item) => sum + parseInt(item.price.replace(/\D/g, '')), 0);
+
+      const qrText = `Order Summary:\n${orderSummary}\nTotal: ₹${total}`;
+      qr.value = qrText;
+
+      alert(`✅ Thank you for your order!\n🍴 You will get your order in a few minutes.\n\n🧾 Order Summary:\n${orderSummary}\nTotal: ₹${total}`);
+
+      orderList.length = 0;
+      localStorage.removeItem('moonlitCart');
+      updateCart();
+      filterMenu('veg');
+    }
+
+    function filterMenu(category) {
+      const container = document.getElementById("menuItems");
+      container.innerHTML = "";
+      menuData[category].forEach(item => {
+        container.innerHTML += `
+          <div class="menu-item" style="background-image: url('${item.bg}')">
+            <h3>${item.name}</h3>
+            <p class="price">${item.price}</p>
+            <button class="order-btn" onclick="addToOrder('${item.name}', this)">Add to Order</button>
+          </div>
+        `;
+      });
+    }
+
+    const menuData = {
+      veg: [
+        { name: "Paneer Butter Masala", price: "₹180", bg: "https://source.unsplash.com/260x200/?paneer" },
+        { name: "Aloo Gobi", price: "₹160", bg: "https://source.unsplash.com/260x200/?aloo,gobi" },
+        { name: "Chole Bhature", price: "₹150", bg: "https://source.unsplash.com/260x200/?chole,bhature" },
+        { name: "Vegetable Biryani", price: "₹170", bg: "https://source.unsplash.com/260x200/?veg,biryani" }
+      ],
+      nonveg: [
+        { name: "Butter Chicken", price: "₹220", bg: "https://source.unsplash.com/260x200/?butter,chicken" },
+        { name: "Chicken 65", price: "₹200", bg: "https://source.unsplash.com/260x200/?chicken65" },
+        { name: "Mutton Rogan Josh", price: "₹250", bg: "https://source.unsplash.com/260x200/?mutton,curry" },
+        { name: "Fish Fry", price: "₹210", bg: "https://source.unsplash.com/260x200/?fish,fry" }
+      ],
+      juices: [
+        { name: "Mango Juice", price: "₹60", bg: "https://source.unsplash.com/260x200/?mango,juice" },
+        { name: "Watermelon Juice", price: "₹50", bg: "https://source.unsplash.com/260x200/?watermelon,juice" },
+        { name: "Orange Juice", price: "₹55", bg: "https://source.unsplash.com/260x200/?orange,juice" },
+        { name: "Pineapple Juice", price: "₹65", bg: "https://source.unsplash.com/260x200/?pineapple,juice" }
+      ],
+      cooldrinks: [
+        { name: "Pepsi", price: "₹40", bg: "https://source.unsplash.com/260x200/?pepsi" },
+        { name: "Sprite", price: "₹40", bg: "https://source.unsplash.com/260x200/?sprite" },
+        { name: "Fanta", price: "₹40", bg: "https://source.unsplash.com/260x200/?fanta" },
+        { name: "Thums Up", price: "₹45", bg: "https://source.unsplash.com/260x200/?thumsup" }
+      ],
+      bakery: [
+        { name: "Chocolate Cake", price: "₹90", bg: "https://source.unsplash.com/260x200/?chocolate,cake" },
+        { name: "Croissant", price: "₹60", bg: "https://source.unsplash.com/260x200/?croissant" },
+        { name: "Donut", price: "₹50", bg: "https://source.unsplash.com/260x200/?donut" },
+        { name: "Muffin", price: "₹55", bg: "https://source.unsplash.com/260x200/?muffin" }
+      ]
+    };
+
+    updateCart();
+    filterMenu('veg');
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Moonlit Vows...💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    .overlay-wrapper {
+      background-color: rgba(0, 0, 0, 0.6); /* semi-transparent overlay */
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .header {
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 60px;
+    }
+
+    .restaurant-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #f0a500;
+      margin-left: 10px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      color: #f0a500;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #f8f8f8;
+    }
+
+    .speciality-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .speciality-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 280px;
+      text-align: left;
+      backdrop-filter: blur(4px);
+    }
+
+    .speciality-card h3 {
+      color: #f0a500;
+      margin-bottom: 10px;
+    }
+
+    .speciality-card p {
+      color: #fff;
+    }
+
+    .features-list {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: auto;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+
+    .features-list li {
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    section {
+      padding: 60px 20px;
+    }
+
+    /* Navigation styles */
+    .nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #f0a500;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .cta {
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-wrapper">
+
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <img src="https://img.icons8.com/color/96/restaurant.png" alt="Logo"/>
+          </a>
+          <span class="restaurant-name">Moonlit Vows...💜</span>
+        </div>
+        <nav class="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="Online Order.html">Online Order</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </nav>
+        <div class="cta"></div>
+      </div>
+    </header>
+
+    <section class="about-us">
+      <div class="container about-container">
+        <div class="about-text">
+          <h2>About Us</h2>
+          <p>Welcome to Moonlit Vows...💜 Restaurant, a celebration of tradition, flavor, and hospitality.</p>
+          <p>We offer an extraordinary dining experience using fresh and locally-sourced ingredients.</p>
+          <p>Our atmosphere combines elegance and comfort to create lasting memories.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="specialities">
+      <div class="container">
+        <h2>Our Specialities</h2>
+        <div class="speciality-list">
+          <div class="speciality-card">
+            <h3>Authentic Indian Cuisine</h3>
+            <p>Our chefs bring traditional Indian flavors to life using heritage recipes passed down through generations.</p>
+          </div>
+          <div class="speciality-card">
+            <h3>Romantic Ambience</h3>
+            <p>Perfect for couples and celebrations with moonlit interiors, purple hues, and cozy candle-lit dinners.</p>
+          </div>
+          <div class="speciality-card">
+            <h3>Signature Dishes</h3>
+            <p>Exclusive house specials crafted with local organic ingredients to offer unmatched taste and health.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
