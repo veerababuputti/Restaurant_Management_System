@@ -1,4 +1,4 @@
-# Moonlit Vows Restaurant - Deployment Instructions
+# Moonlit Vows Restaurant - GitHub Pages Deployment
 
 ## Folder Structure
 
@@ -22,7 +22,7 @@ Moonlit_Vows/
 │   └── photo-1517248135467-4c7edcad34c4.jpeg
 ```
 
-## Deploying to GitHub Pages
+## How to Deploy on GitHub Pages
 
 1. **Create a GitHub Account**
    - Go to https://github.com and sign up or log in.
@@ -51,4 +51,4 @@ Moonlit_Vows/
 
 ---
 
-If you need help, see the [GitHub Pages documentation](https://pages.github.com/).
+For more help, see the [GitHub Pages documentation](https://pages.github.com/).

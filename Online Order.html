@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moonlit Vows...💜 | Online Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    header {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px 10px;
+    }
+    .logo img { height: 60px; }
+    .restaurant-name {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #f0a500;
+      margin-top: 10px;
+    }
+    .nav {
+      margin-top: 10px;
+    }
+    .nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .nav li {
+      margin: 0 15px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #f0a500;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    .nav a:hover {
+      color: #ffcc00;
+    }
+
+    .container { display: flex; flex-wrap: wrap; }
+    .menu, .cart {
+      padding: 20px;
+      flex: 1;
+      min-width: 300px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .menu-category-buttons {
+      text-align: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .menu-category-buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      background: #f0a500;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .menu-category-buttons button:hover {
+      background: #ffcc00;
+      transform: scale(1.05);
+    }
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .menu-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 0 10px #000;
+      transition: transform 0.2s;
+    }
+    .menu-item:hover { transform: scale(1.05); }
+    .menu-item h3 {
+      margin: 10px 0 5px;
+      color: #ffeb3b;
+      font-size: 1.1rem;
+    }
+    .menu-item .price { color: #eee; margin-bottom: 10px; }
+    .order-btn {
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .order-btn:hover { background: #45a049; }
+
+    .cart {
+      border-left: 2px solid #f0a500;
+    }
+    .cart h2 { text-align: center; color: #f0a500; }
+    .cart ul { list-style: none; padding: 0; }
+    .cart li {
+      background: rgba(255, 255, 255, 0.1);
+      margin: 10px 0;
+      padding: 8px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .remove-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .total, .qr-container {
+      text-align: center;
+      margin-top: 15px;
+    }
+    canvas {
+      margin-top: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .submit-btn {
+      margin-top: 20px;
+      background: #f0a500;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="https://img.icons8.com/color/96/restaurant.png" alt="Logo"/></a>
+        <span class="restaurant-name">Moonlit Vows...💜</span>
+      </div>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="Online Order.html">Online Order</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="cta"></div>
+    </div>
+  </header>
+
+  <!-- Online Order Section -->
+  <section class="online-order">
+    <div class="container">
+      <!-- Menu Section -->
+      <div class="menu">
+        <h2>Online Order</h2>
+        <div class="menu-category-buttons">
+          <button onclick="filterMenu('veg')">Veg</button>
+          <button onclick="filterMenu('nonveg')">Non-Veg</button>
+          <button onclick="filterMenu('juices')">Juices</button>
+          <button onclick="filterMenu('cooldrinks')">Cool Drinks</button>
+          <button onclick="filterMenu('bakery')">Bakery</button>
+        </div>
+        <div class="menu-grid" id="menuItems"></div>
+      </div>
+
+      <!-- Cart Section -->
+      <div class="cart">
+        <h2>Your Cart</h2>
+        <ul id="cartList"></ul>
+        <div class="total">Total: ₹<span id="totalAmount">0</span></div>
+        <div class="qr-container"><canvas id="qr"></canvas></div>
+        <button class="submit-btn" onclick="submitOrder()">Place Order</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const menuData = {
+      veg: [
+        { name: "Paneer Butter Masala", price: 180 },
+        { name: "Aloo Gobi", price: 160 },
+        { name: "Chole Bhature", price: 150 },
+        { name: "Veg Biryani", price: 170 }
+      ],
+      nonveg: [
+        { name: "Butter Chicken", price: 220 },
+        { name: "Chicken 65", price: 200 },
+        { name: "Mutton Rogan Josh", price: 250 },
+        { name: "Fish Fry", price: 210 }
+      ],
+      juices: [
+        { name: "Mango Juice", price: 60 },
+        { name: "Watermelon Juice", price: 50 },
+        { name: "Orange Juice", price: 55 },
+        { name: "Pineapple Juice", price: 65 }
+      ],
+      cooldrinks: [
+        { name: "Pepsi", price: 40 },
+        { name: "Sprite", price: 40 },
+        { name: "Fanta", price: 40 },
+        { name: "Thums Up", price: 45 }
+      ],
+      bakery: [
+        { name: "Chocolate Cake", price: 90 },
+        { name: "Donut", price: 50 },
+        { name: "Muffin", price: 55 },
+        { name: "Croissant", price: 60 }
+      ]
+    };
+
+    const menuItems = document.getElementById("menuItems");
+    const cartList = document.getElementById("cartList");
+    const totalAmount = document.getElementById("totalAmount");
+    const qr = new QRious({ element: document.getElementById("qr"), size: 150 });
+    const orderList = [];
+
+    function filterMenu(category) {
+      menuItems.innerHTML = "";
+      menuData[category].forEach(item => {
+        menuItems.innerHTML += `
+          <div class="menu-item">
+            <h3>${item.name}</h3>
+            <p class="price">₹${item.price}</p>
+            <button class="order-btn" onclick="addToOrder('${item.name}', ${item.price})">Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+
+    function addToOrder(name, price) {
+      const existing = orderList.find(i => i.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        orderList.push({ name, price, qty: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      cartList.innerHTML = "";
+      let total = 0;
+      orderList.forEach((item, index) => {
+        total += item.price * item.qty;
+        cartList.innerHTML += `
+          <li>
+            ${item.name} x${item.qty} - ₹${item.price * item.qty}
+            <button class="remove-btn" onclick="removeItem(${index})">x</button>
+          </li>
+        `;
+      });
+      totalAmount.textContent = total;
+      qr.value = orderList.map(i => `${i.name} x${i.qty} = ₹${i.price * i.qty}`).join('\n') + `\nTotal: ₹${total}`;
+    }
+
+    function removeItem(index) {
+      orderList.splice(index, 1);
+      updateCart();
+    }
+
+    function validateName(name) {
+      return /^[A-Za-z\s]+$/.test(name.trim());
+    }
+
+    function validatePhone(phone) {
+      return /^[6-9]\d{9}$/.test(phone.trim());
+    }
+
+    function submitOrder() {
+      if (!orderList.length) return alert("🛒 Please add items to cart first!");
+
+      const name = prompt("Enter your name:");
+      if (!validateName(name)) return alert("❌ Please enter a valid name (letters only)");
+
+      const phone = prompt("Enter your phone number:");
+      if (!validatePhone(phone)) return alert("❌ Enter a valid 10-digit mobile number starting with 6–9");
+
+      const address = prompt("Enter delivery address:");
+      const isQR = confirm("Pay now via QR? (OK = QR Payment, Cancel = Cash on Delivery)");
+      const payment = isQR ? "UPI/QR" : "Cash on Delivery";
+
+      let total = orderList.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const summary = orderList.map(i => `${i.name} x${i.qty} = ₹${i.price * i.qty}`).join('\n');
+      const qrText = `🧾 Moonlit Vows...💜 Order\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nPayment: ${payment}\n\n${summary}\n\nTotal: ₹${total}`;
+
+      qr.value = isQR ? qrText : '';
+      alert(`✅ Thank you, ${name}!\nYour order will be delivered to ${address}.\nPayment Method: ${payment}\nTotal: ₹${total}`);
+
+      // Reset
+      orderList.length = 0;
+      updateCart();
+    }
+
+    filterMenu('veg'); // Default view
+  </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reservations - Moonlit Vows...💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1505245208761-ba872912fac0?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    .header {
+      background-color: #000;
+      padding: 20px 10px;
+      text-align: center;
+    }
+    .logo {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .logo img {
+      max-width: 100%;
+      height: auto;
+    }
+    .restaurant-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #f0a500;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+    .nav {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 30px;
+    }
+    .nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+    .nav li {
+      margin: 0 15px;
+    }
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    .nav a:hover {
+      color: #f0a500;
+    }
+    .reservations {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 60px 20px;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reservations h2 {
+      font-size: 2.5rem;
+      color: #f0a500;
+    }
+    .reservations p.subtitle {
+      font-size: 1.2rem;
+      color: #f5f5f5;
+      margin-top: 10px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    form {
+      max-width: 600px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      animation: fadeIn 2s ease-in-out;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #2a2a2a;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #ccc;
+    }
+    button {
+      background-color: #f0a500;
+      color: #000;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="https://img.icons8.com/color/96/restaurant.png" alt="Logo"/></a>
+        <span class="restaurant-name">Moonlit Vows...💜</span>
+      </div>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="Online Order.html">Online Order</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="cta"></div>
+    </div>
+  </header>
+
+  <section class="reservations">
+    <div class="container">
+      <h2>Reserve Your Table</h2>
+      <p class="subtitle">Fill the form below to check availability and reserve your table.</p>
+      <form id="reservationForm">
+        <input type="text" name="name" placeholder="Your Name" pattern="[A-Za-z ]+" title="Name should contain only letters." required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="tel" name="phone" placeholder="Your Phone (10 digits)" pattern="[0-9]{10}" title="Please enter 10 digit number." required>
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <select name="table" required>
+          <option value="">Select Table Number</option>
+          <option value="1">Table 1</option>
+          <option value="2">Table 2</option>
+          <option value="3">Table 3</option>
+          <option value="4">Table 4</option>
+          <option value="5">Table 5</option>
+        </select>
+        <input type="number" name="people" placeholder="No. of People" min="1" max="10" required>
+        <textarea name="special" placeholder="Any special dish to prepare? (optional)"></textarea>
+        <button type="submit">Check Availability & Book</button>
+      </form>
+    </div>
+  </section>
+
+ <script>
+  document.getElementById('reservationForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const form = this;
+
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      date: form.date.value,
+      time: form.time.value,
+      table: form.table.value,
+      people: form.people.value,
+      special: form.special.value
+    };
+
+    try {
+      const res = await fetch('http://localhost:5000/reserve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.status === 409) {
+        alert("❌ Sorry, the selected time is not available for this table.");
+      } else if (res.ok) {
+        alert(`✅ Thank you ${data.name}!\nYour reservation for ${data.people} people is confirmed.\nWe look forward to serving you!`);
+        form.reset();
+      } else {
+        alert("❌ Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      alert("🚫 Network error or backend not reachable.");
+    }
+  });
+</script>
+
+</body>
+</html>
